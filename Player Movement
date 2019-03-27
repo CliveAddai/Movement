@@ -1,0 +1,41 @@
+using System.Collections;
+using UnityEngine;
+
+public class Boy : MonoBehaviour
+{
+    public float speed = 1, jumpVelocity = 10;
+    public LayerMask playerMask;
+    Transform myTransform, tagGround;
+    Rigidbody2D myBody;
+
+
+    bool isGrounded = false;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        myBody = GetComponent<Rigidbody2D>();
+        myTransform = this.transform;
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+       
+        Move(Input.GetAxisRaw("Horizontal"));
+        if (Input.GetButtonDown("Jump"))
+            Jump();
+    }
+    public void Move(float horizontalInput)
+    {
+        Vector2 moveVel = myBody.velocity;
+        moveVel.x = horizontalInput * speed;
+        myBody.velocity = moveVel;
+    }
+
+    public void Jump ()
+    {
+        if(isGrounded)
+        myBody.velocity += jumpVelocity * Vector2.up;
+    }
+}
